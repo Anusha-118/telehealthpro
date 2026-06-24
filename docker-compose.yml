@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # 1. MySQL Database Container
+  db:
+    image: mysql:8.0
+    container_name: telehealth_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: telehealth_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Node Express API Server
+  backend:
+    build: ./backend
+    container_name: telehealth_backend_api
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=telehealth_db
+      - DB_PORT=3306
+      - JWT_SECRET=telehealthsecretkeyfortokens
+      - JWT_REFRESH_SECRET=telehealthrefreshsecretkeyfortokens
+      - JWT_EXPIRE=1d
+      - JWT_REFRESH_EXPIRE=7d
+      - STRIPE_SECRET_KEY=sk_test_mockkeyfordevelopmentpayments
+      - CLIENT_URL=http://localhost
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 3. React Frontend Client
+  frontend:
+    build: ./frontend
+    container_name: telehealth_frontend_client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

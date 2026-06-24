@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-darkBg-deep dark:text-slate-100;
+  }
+}
+
+/* Modern Glassmorphism Styling Utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-darkBg-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full transition-colors hover:bg-slate-400 dark:hover:bg-slate-600;
+}
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-color: #cbd5e1; /* slate-300 */
+    opacity: 0.6;
+  }
+  50% {
+    background-color: #f1f5f9; /* slate-100 */
+    opacity: 1;
+  }
+  100% {
+    background-color: #cbd5e1;
+    opacity: 0.6;
+  }
+}
+
+.dark .skeleton {
+  animation: skeleton-loading-dark 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-loading-dark {
+  0% {
+    background-color: #334155; /* slate-700 */
+    opacity: 0.6;
+  }
+  50% {
+    background-color: #1e293b; /* slate-800 */
+    opacity: 1;
+  }
+  100% {
+    background-color: #334155;
+    opacity: 0.6;
+  }
+}
+
+.skeleton {
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+/* Custom Micro Animations */
+.hover-scale {
+  @apply transition-all duration-300 hover:scale-[1.02] active:scale-[0.98];
+}
+
+/* Pulse Glow Effects */
+.pulse-glow-teal {
+  box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+  animation: pulse-teal 2s infinite;
+}
+
+@keyframes pulse-teal {
+  0% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(20, 184, 166, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0);
+  }
+}
