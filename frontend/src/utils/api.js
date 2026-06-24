@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://telehealthpro.onrender.com',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -31,7 +31,7 @@ api.interceptors.response.use(
         const rToken = localStorage.getItem('refreshToken');
         if (rToken) {
           // Attempt to renew access token using refresh token
-          const res = await axios.post('http://localhost:5000/api/auth/refresh-token', { token: rToken });
+          const res = await axios.post('https://telehealthpro.onrender.com/auth/refresh-token', { token: rToken });
           if (res.data && res.data.success) {
             const { accessToken, refreshToken } = res.data.tokens;
             localStorage.setItem('accessToken', accessToken);
